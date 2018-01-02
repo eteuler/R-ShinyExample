@@ -213,8 +213,10 @@ rhandsontable(values$HQED, useTypes = FALSE, rowHeaders = FALSE)
       Q3.Metric = c(13,1,1,2,2),
       Q4.Metric = c(13,1,1,2,2)
     ) 
-    HQEDMetrics$FY.Metric <- sum(HQEDMetrics$Q1.Metric, HQEDMetrics$Q2.Metric, 
-                                HQEDMetrics$Q3.Metric, HQEDMetrics$Q4.Metric,na.rm=TRUE)
+    # HQEDMetrics$FY.Metric <- sum(HQEDMetrics$Q1.Metric, HQEDMetrics$Q2.Metric, 
+    #                             HQEDMetrics$Q3.Metric, HQEDMetrics$Q4.Metric,na.rm=TRUE)
+    HQEDMetrics$FY.Metric <- (HQEDMetrics$Q1.Metric + HQEDMetrics$Q2.Metric + 
+      HQEDMetrics$Q3.Metric + HQEDMetrics$Q4.Metric) #na.rm=TRUE)
     
 
     qcols <- colnames(HQEDdisplay)[grepl("Q[0-9]$",colnames(HQEDdisplay))]
@@ -226,7 +228,8 @@ rhandsontable(values$HQED, useTypes = FALSE, rowHeaders = FALSE)
    HQEDdisplay[,therest] <- 0 
 
     
-    HQEDdisplay$FY.Total <- sum(HQEDdisplay$Q1,HQEDdisplay$Q2, HQEDdisplay$Q3, HQEDdisplay$Q4, na.rm = TRUE)
+    # HQEDdisplay$FY.Total <- sum(HQEDdisplay$Q1,HQEDdisplay$Q2, HQEDdisplay$Q3, HQEDdisplay$Q4, na.rm = TRUE)
+   HQEDdisplay$FY.Total <- (HQEDdisplay$Q1 + HQEDdisplay$Q2 + HQEDdisplay$Q3 + HQEDdisplay$Q4)
     
     HQtableWithED <- merge(HQEDdisplay, HQEDMetrics, by = "Event.or.distribution.type.", all.y = TRUE)
     HQtableWithED[is.na(HQtableWithED)] <- 0
@@ -250,8 +253,11 @@ rhandsontable(values$HQED, useTypes = FALSE, rowHeaders = FALSE)
       Q3.Metric = c(160,105,300,1,13),
       Q4.Metric = c(160,105,300,1,14)
     ) 
-    HQSMSMetrics$FY.Metric <- sum(HQSMSMetrics$Q1.Metric, HQSMSMetrics$Q2.Metric,
-                                HQSMSMetrics$Q3.Metric,HQSMSMetrics$Q4.Metric,na.rm=TRUE)  
+    # HQSMSMetrics$FY.Metric <- sum(HQSMSMetrics$Q1.Metric, HQSMSMetrics$Q2.Metric,
+    #                             HQSMSMetrics$Q3.Metric,HQSMSMetrics$Q4.Metric,na.rm=TRUE)  
+    
+     HQSMSMetrics$FY.Metric <- (HQSMSMetrics$Q1.Metric + HQSMSMetrics$Q2.Metric + 
+                                  HQSMSMetrics$Q3.Metric + HQSMSMetrics$Q4.Metric) 
     
     qcols <- colnames(HQSMSdisplay)[grepl("Q[0-9]$",colnames(HQSMSdisplay))]
     gdata::unknownToNA(x=HQSMSdisplay[,qcols], unknown = NA)
@@ -269,7 +275,8 @@ rhandsontable(values$HQED, useTypes = FALSE, rowHeaders = FALSE)
     # HQSMSdisplay$Q3[is.null(HQSMSdisplay$Q3)] <- 0
     # HQSMSdisplay$Q4[is.null(HQSMSdisplay$Q4)] <- 0
     
-    HQSMSdisplay$FY.Total <- sum(HQSMSdisplay$Q1, HQSMSdisplay$Q2,HQSMSdisplay$Q3,HQSMSdisplay$Q4,na.rm=TRUE)
+    # HQSMSdisplay$FY.Total <- sum(HQSMSdisplay$Q1, HQSMSdisplay$Q2,HQSMSdisplay$Q3,HQSMSdisplay$Q4,na.rm=TRUE)
+    HQSMSdisplay$FY.Total <- (HQSMSdisplay$Q1 + HQSMSdisplay$Q2 + HQSMSdisplay$Q3 + HQSMSdisplay$Q4)
 
     HQtableWithSMS <- merge(HQSMSdisplay, HQSMSMetrics, by = "Event.or.distribution.type.", all.y = TRUE)
     HQtableWithSMS[is.na(HQtableWithSMS)] <- 0
@@ -516,7 +523,8 @@ observeEvent(input$saveHQall, {
     # PBEDdisplay$Q3[is.null(PBEDdisplay$Q3)] <- 0
     # PBEDdisplay$Q4[is.null(PBEDdisplay$Q4)] <- 0
     
-    PBEDdisplay$FY.Total <- sum(PBEDdisplay$Q1, PBEDdisplay$Q2, PBEDdisplay$Q3, PBEDdisplay$Q4, na.rm=TRUE)
+    # PBEDdisplay$FY.Total <- sum(PBEDdisplay$Q1, PBEDdisplay$Q2, PBEDdisplay$Q3, PBEDdisplay$Q4, na.rm=TRUE) 
+    PBEDdisplay$FY.Total <- (PBEDdisplay$Q1 + PBEDdisplay$Q2 + PBEDdisplay$Q3 + PBEDdisplay$Q4)
     PBtableWithED <- merge(PBEDdisplay, PBEDMetrics, by = "Event.or.distribution.type.", all.y = TRUE)
     PBtableWithED[is.na(PBtableWithED)] <- 0
 #social media submission data creation     
@@ -561,7 +569,8 @@ observeEvent(input$saveHQall, {
     # PBSMSdisplay$Q3[is.null(PBSMSdisplay$Q3)] <- 0
     # PBSMSdisplay$Q4[is.null(PBSMSdisplay$Q4)] <- 0
     
-    PBSMSdisplay$FY.Total <- sum(PBSMSdisplay$Q1, PBSMSdisplay$Q2, PBSMSdisplay$Q3, PBSMSdisplay$Q4, na.rm=TRUE)
+    # PBSMSdisplay$FY.Total <- sum(PBSMSdisplay$Q1, PBSMSdisplay$Q2, PBSMSdisplay$Q3, PBSMSdisplay$Q4, na.rm=TRUE)
+    PBSMSdisplay$FY.Total <- (PBSMSdisplay$Q1 + PBSMSdisplay$Q2 + PBSMSdisplay$Q3 + PBSMSdisplay$Q4)
     PBtableWithSMS <- merge(PBSMSdisplay, PBSMSMetrics, by = "Event.or.distribution.type.", all.y = TRUE)
     PBtableWithSMS[is.na(PBtableWithSMS)] <- 0
 #combining of SMS and ED tables  
@@ -745,8 +754,10 @@ observeEvent(input$saveBGall, {
     Q3.Metric = c(13,1,12,1,22,4,2,4,1,6,5),
     Q4.Metric = c(13,1,12,3,22,4,4,4,1,6,5) 
   )
-    BGEDMetrics$FY.Metric <- sum(BGEDMetrics$Q1.Metric, BGEDMetrics$Q2.Metric,
-                                BGEDMetrics$Q3.Metric, BGEDMetrics$Q4.Metric,na.rm=TRUE )
+    # BGEDMetrics$FY.Metric <- sum(BGEDMetrics$Q1.Metric, BGEDMetrics$Q2.Metric,
+    #                             BGEDMetrics$Q3.Metric, BGEDMetrics$Q4.Metric,na.rm=TRUE )
+  BGEDMetrics$FY.Metric <- (BGEDMetrics$Q1.Metric + BGEDMetrics$Q2.Metric + 
+                              BGEDMetrics$Q3.Metric + BGEDMetrics$Q4.Metric)
     
     qcols <- colnames(BGEDdisplay)[grepl("Q[0-9]$",colnames(BGEDdisplay))]
     gdata::unknownToNA(x=BGEDdisplay[,qcols], unknown = NA)
@@ -765,7 +776,8 @@ observeEvent(input$saveBGall, {
   # BGEDdisplay$Q3[is.null(BGEDdisplay$Q3)] <- 0
   # BGEDdisplay$Q4[is.null(BGEDdisplay$Q4)] <- 0
 
-  BGEDdisplay$FY.Total <- sum(BGEDdisplay$Q1, BGEDdisplay$Q2, BGEDdisplay$Q3, BGEDdisplay$Q4,na.rm=TRUE)
+  # BGEDdisplay$FY.Total <- sum(BGEDdisplay$Q1, BGEDdisplay$Q2, BGEDdisplay$Q3, BGEDdisplay$Q4,na.rm=TRUE)
+  BGEDdisplay$FY.Total <- (BGEDdisplay$Q1 + BGEDdisplay$Q2 + BGEDdisplay$Q3 + BGEDdisplay$Q4)
   BGtableWithED <- merge(BGEDdisplay, BGEDMetrics, by = "Event.or.distribution.type.",all.y = TRUE)
   BGtableWithED[is.na(BGtableWithED)] <- 0
   
@@ -790,8 +802,10 @@ observeEvent(input$saveBGall, {
     Q3.Metric = c(70,70,48,60,0,4,1),
     Q4.Metric = c(70,70,48,60,0,4,1) 
   )
-  BGSMSMetrics$FY.Metric <- sum(BGSMSMetrics$Q1.Metric, BGSMSMetrics$Q2.Metric,
-                              BGSMSMetrics$Q3.Metric, BGSMSMetrics$Q4.Metric,na.rm=TRUE )
+  # BGSMSMetrics$FY.Metric <- sum(BGSMSMetrics$Q1.Metric, BGSMSMetrics$Q2.Metric,
+  #                             BGSMSMetrics$Q3.Metric, BGSMSMetrics$Q4.Metric,na.rm=TRUE )
+  BGSMSMetrics$FY.Metric <- (BGSMSMetrics$Q1.Metric + BGSMSMetrics$Q2.Metric + 
+                               BGSMSMetrics$Q3.Metric + BGSMSMetrics$Q4.Metric)
   
   qcols <- colnames(BGSMSdisplay)[grepl("Q[0-9]$",colnames(BGSMSdisplay))]
   gdata::unknownToNA(x=BGSMSdisplay[,qcols], unknown = NA)
@@ -810,6 +824,7 @@ observeEvent(input$saveBGall, {
   # BGSMSdisplay$Q4[is.null(BGSMSdisplay$Q4)] <- 0
   
   BGSMSdisplay$FY.Total <- sum(BGSMSdisplay$Q1, BGSMSdisplay$Q2, BGSMSdisplay$Q3, BGSMSdisplay$Q4,na.rm=TRUE)
+  BGSMSdisplay$FY.Total <- (BGSMSdisplay$Q1 + BGSMSdisplay$Q2 + BGSMSdisplay$Q3 + BGSMSdisplay$Q4)
   BGtableWithSMS <- merge(BGSMSdisplay, BGSMSMetrics, by = "Event.or.distribution.type.",all.y = TRUE)
   BGtableWithSMS[is.na(BGtableWithSMS)] <- 0
     
